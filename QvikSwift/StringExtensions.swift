@@ -30,7 +30,7 @@ public extension String {
     - returns: String length in number of characters.
     */
     public var length: Int {
-        return self.characters.count
+        return self.count
     }
 
     /** 
@@ -81,10 +81,10 @@ public extension String {
     - returns: the substring
     */
     public func substring(startIndex: Int, length: Int) -> String {
-        let start = self.characters.index(self.startIndex, offsetBy: startIndex)
-        let end = self.characters.index(self.startIndex, offsetBy: startIndex + length)
+        let start = self.index(self.startIndex, offsetBy: startIndex)
+        let end = self.index(self.startIndex, offsetBy: startIndex + length)
         
-        return self[start..<end]
+        return String(self[start..<end])
     }
     
     /**
@@ -94,8 +94,8 @@ public extension String {
     - returns: the substring from startIndex to the end of this string
     */
     public func substring(startIndex: Int) -> String {
-        let start = self.characters.index(self.startIndex, offsetBy: startIndex)
-        return self[start..<self.endIndex]
+        let start = self.index(self.startIndex, offsetBy: startIndex)
+        return String(self[start..<self.endIndex])
     }
 
     /**
@@ -105,7 +105,7 @@ public extension String {
      - returns: i:th character in the string
      */
     subscript (i: Int) -> Character {
-        return self[self.characters.index(self.startIndex, offsetBy: i)]
+        return self[self.index(self.startIndex, offsetBy: i)]
     }
 
     /**
@@ -115,10 +115,10 @@ public extension String {
      - returns: substring matching the range r
      */
     subscript (r: Range<Int>) -> String {
-        let start = characters.index(startIndex, offsetBy: r.lowerBound)
-        let end = characters.index(start, offsetBy: r.upperBound - r.lowerBound)
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end = index(start, offsetBy: r.upperBound - r.lowerBound)
         
-        return self[Range(start ..< end)]
+        return String(self[Range(start ..< end)])
     }
 
     /**
@@ -153,7 +153,7 @@ public extension String {
      - returns: the bounding rectangle required to draw the string
      */
     public func boundingRectWithFont(_ font: UIFont, constrainedToSize size: CGSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)) -> CGRect {
-        let attributedString = NSAttributedString(string: self, attributes: [NSFontAttributeName: font])
+        let attributedString = NSAttributedString(string: self, attributes: [NSAttributedStringKey.font: font])
         return attributedString.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil)
     }
 
